@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unique.mapper.ProfessionalInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.unique.pojo.ProfessionalInfo" >
+    <id column="mid" property="mid" jdbcType="INTEGER" />
+    <result column="mname" property="mname" jdbcType="VARCHAR" />
+    <result column="job_orientation" property="jobOrientation" jdbcType="VARCHAR" />
+    <result column="professional_knowledage" property="professionalKnowledage" jdbcType="VARCHAR" />
+    <result column="skill" property="skill" jdbcType="VARCHAR" />
+    <result column="subjec" property="subjec" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.unique.pojo.ProfessionalInfo" extends="BaseResultMap" >
+    <result column="Industry_definition" property="industryDefinition" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    mid, mname, job_orientation, professional_knowledage, skill, subjec
+  </sql>
+  <sql id="Blob_Column_List" >
+    Industry_definition
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.unique.pojo.ProfessionalInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from professional_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.unique.pojo.ProfessionalInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from professional_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from professional_info
+    where mid = #{mid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from professional_info
+    where mid = #{mid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.unique.pojo.ProfessionalInfoExample" >
+    delete from professional_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.unique.pojo.ProfessionalInfo" >
+    insert into professional_info (mid, mname, job_orientation, 
+      professional_knowledage, skill, subjec, 
+      Industry_definition)
+    values (#{mid,jdbcType=INTEGER}, #{mname,jdbcType=VARCHAR}, #{jobOrientation,jdbcType=VARCHAR}, 
+      #{professionalKnowledage,jdbcType=VARCHAR}, #{skill,jdbcType=VARCHAR}, #{subjec,jdbcType=VARCHAR}, 
+      #{industryDefinition,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unique.pojo.ProfessionalInfo" >
+    insert into professional_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="mname != null" >
+        mname,
+      </if>
+      <if test="jobOrientation != null" >
+        job_orientation,
+      </if>
+      <if test="professionalKnowledage != null" >
+        professional_knowledage,
+      </if>
+      <if test="skill != null" >
+        skill,
+      </if>
+      <if test="subjec != null" >
+        subjec,
+      </if>
+      <if test="industryDefinition != null" >
+        Industry_definition,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="mname != null" >
+        #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="jobOrientation != null" >
+        #{jobOrientation,jdbcType=VARCHAR},
+      </if>
+      <if test="professionalKnowledage != null" >
+        #{professionalKnowledage,jdbcType=VARCHAR},
+      </if>
+      <if test="skill != null" >
+        #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="subjec != null" >
+        #{subjec,jdbcType=VARCHAR},
+      </if>
+      <if test="industryDefinition != null" >
+        #{industryDefinition,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.unique.pojo.ProfessionalInfoExample" resultType="java.lang.Integer" >
+    select count(*) from professional_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update professional_info
+    <set >
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=INTEGER},
+      </if>
+      <if test="record.mname != null" >
+        mname = #{record.mname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobOrientation != null" >
+        job_orientation = #{record.jobOrientation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professionalKnowledage != null" >
+        professional_knowledage = #{record.professionalKnowledage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skill != null" >
+        skill = #{record.skill,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjec != null" >
+        subjec = #{record.subjec,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryDefinition != null" >
+        Industry_definition = #{record.industryDefinition,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update professional_info
+    set mid = #{record.mid,jdbcType=INTEGER},
+      mname = #{record.mname,jdbcType=VARCHAR},
+      job_orientation = #{record.jobOrientation,jdbcType=VARCHAR},
+      professional_knowledage = #{record.professionalKnowledage,jdbcType=VARCHAR},
+      skill = #{record.skill,jdbcType=VARCHAR},
+      subjec = #{record.subjec,jdbcType=VARCHAR},
+      Industry_definition = #{record.industryDefinition,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update professional_info
+    set mid = #{record.mid,jdbcType=INTEGER},
+      mname = #{record.mname,jdbcType=VARCHAR},
+      job_orientation = #{record.jobOrientation,jdbcType=VARCHAR},
+      professional_knowledage = #{record.professionalKnowledage,jdbcType=VARCHAR},
+      skill = #{record.skill,jdbcType=VARCHAR},
+      subjec = #{record.subjec,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unique.pojo.ProfessionalInfo" >
+    update professional_info
+    <set >
+      <if test="mname != null" >
+        mname = #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="jobOrientation != null" >
+        job_orientation = #{jobOrientation,jdbcType=VARCHAR},
+      </if>
+      <if test="professionalKnowledage != null" >
+        professional_knowledage = #{professionalKnowledage,jdbcType=VARCHAR},
+      </if>
+      <if test="skill != null" >
+        skill = #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="subjec != null" >
+        subjec = #{subjec,jdbcType=VARCHAR},
+      </if>
+      <if test="industryDefinition != null" >
+        Industry_definition = #{industryDefinition,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.unique.pojo.ProfessionalInfo" >
+    update professional_info
+    set mname = #{mname,jdbcType=VARCHAR},
+      job_orientation = #{jobOrientation,jdbcType=VARCHAR},
+      professional_knowledage = #{professionalKnowledage,jdbcType=VARCHAR},
+      skill = #{skill,jdbcType=VARCHAR},
+      subjec = #{subjec,jdbcType=VARCHAR},
+      Industry_definition = #{industryDefinition,jdbcType=LONGVARCHAR}
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unique.pojo.ProfessionalInfo" >
+    update professional_info
+    set mname = #{mname,jdbcType=VARCHAR},
+      job_orientation = #{jobOrientation,jdbcType=VARCHAR},
+      professional_knowledage = #{professionalKnowledage,jdbcType=VARCHAR},
+      skill = #{skill,jdbcType=VARCHAR},
+      subjec = #{subjec,jdbcType=VARCHAR}
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+</mapper>
